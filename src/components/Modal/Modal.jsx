@@ -1,4 +1,6 @@
+import React, { useEffect } from 'react';
 import Modal from 'react-modal';
+
 const customStyles = {
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -23,9 +25,26 @@ const customStyles = {
     border: 'none',
   },
 };
+
 Modal.setAppElement('#root');
 
 export const ImgModal = ({ isOpen, onClose, image, tags }) => {
+  useEffect(() => {
+    const handleKeyDown = event => {
+      if (event.code === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   return (
     <Modal
       isOpen={isOpen}

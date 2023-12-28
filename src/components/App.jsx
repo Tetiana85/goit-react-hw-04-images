@@ -50,7 +50,7 @@ export const App = () => {
     };
 
     fetchData();
-  }, [query, page]);
+  }, [page, query]);
 
   const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1);
